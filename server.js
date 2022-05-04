@@ -22,7 +22,12 @@ app.use(express.static('public'));
 
 
 //API Route  Get Request
-
+app.get("/api/notes", (req, res) => {
+    readFileAsync("./db.json", "utf8").then(function(data) {
+        notes = [].concat(JSON.parse(data))
+        res.json(notes);
+    })
+});
 
 app.delete('/api/notes/:title', (req, res) => {
     
@@ -30,12 +35,12 @@ app.delete('/api/notes/:title', (req, res) => {
 
 // GET /notes for notes.html file
 app.get('/notes', (req, res) =>
-  res.sendFile(path.join(__dirname, '../public/notes.html'))
+  res.sendFile(path.join(__dirname, '/public/notes.html'))
 );
 
 // GET * for index.html file, Home page
 app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, '../public/index.html'))
+  res.sendFile(path.join(__dirname, '/public/index.html'))
 );
 
 app.listen(PORT, () =>
