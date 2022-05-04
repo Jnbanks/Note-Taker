@@ -32,13 +32,18 @@ app.get("/api/notes", (req, res) => {
 });
 
 //Post Request for user input
-// app.post("/api/notes", (req, res) => {
-//     const note = req.body;
-//     readFileAsync("/db.json", "utf8").then(function(data) {
-//         const notes = [].concat(JSON.parse(data));
-//         note.id = 
-//     }) 
-// });
+app.post("/api/notes", (req, res) => {
+    const note = req.body;
+    readFileAsync("./db.json", "utf8").then(function(data) {
+        const notes = [].concat(JSON.parse(data));
+        note.id = uuid.v1();
+        notes.push(note);
+        return notes;
+    }).then(function(notes) {
+        writeFileAsync("./db.json", JSON.stringify(notes))
+        res.json(note);
+    })  
+});
 
 app.delete('/api/notes/:title', (req, res) => {
     
