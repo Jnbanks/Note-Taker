@@ -3,6 +3,8 @@ const express = require('express');
 const util = require("util");
 const fs = require('fs');
 const path = require('path');
+const uuid = require("uuid");
+console.log(uuid.v1());
 
 //Asynchronous Processes
 const readFileAsync = util.promisify(fs.readFile);
@@ -21,13 +23,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 
-//API Route  Get Request
+//Get Request for user input
 app.get("/api/notes", (req, res) => {
     readFileAsync("./db.json", "utf8").then(function(data) {
         notes = [].concat(JSON.parse(data))
         res.json(notes);
     })
 });
+
+//Post Request for user input
+// app.post("/api/notes", (req, res) => {
+//     const note = req.body;
+//     readFileAsync("/db.json", "utf8").then(function(data) {
+//         const notes = [].concat(JSON.parse(data));
+//         note.id = 
+//     }) 
+// });
 
 app.delete('/api/notes/:title', (req, res) => {
     
