@@ -8,23 +8,50 @@ const path = require('path');
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
+//Server
 const app = express();
 const PORT = process.env.port || 3001;
-//const api = require('./public/index');
 
-const routes = require('./controllers/routes');
 
 // Middleware for parsing JSON and urlencoded form data
-app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/", routes)
-//app.use('/api', api);
+
+//Static Middleware
+app.use(express.static('public'));
+
+
+//API Route  Get Request
+
 
 app.delete('/api/notes/:title', (req, res) => {
+    
+});
 
-})
+// GET /notes for notes.html file
+app.get('/notes', (req, res) =>
+  res.sendFile(path.join(__dirname, '../public/notes.html'))
+);
+
+// GET * for index.html file, Home page
+app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, '../public/index.html'))
+);
 
 app.listen(PORT, () =>
 console.log(`App listening at http://localhost:${PORT} 🚀`)
 );
+
+
+
+
+
+
+
+
+
+
+//const api = require('./public/index');
+//const routes = require('./controllers/routes');
+//app.use("/", routes)
+//app.use('/api', api);
