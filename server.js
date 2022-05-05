@@ -1,14 +1,12 @@
 //Dependencies
 const express = require('express');
-const util = require("util");
-const fs = require('fs');
 const path = require('path');
-const uuid = require("uuid");
-console.log(uuid.v1());
+const routes = require("./controllers/routes");
+const apiRoutes = require("./controllers/api");
 
 //Asynchronous Processes
-const readFileAsync = util.promisify(fs.readFile);
-const writeFileAsync = util.promisify(fs.writeFile);
+// const readFileAsync = util.promisify(fs.readFile);
+// const writeFileAsync = util.promisify(fs.writeFile);
 
 //Server
 const app = express();
@@ -21,54 +19,56 @@ app.use(express.urlencoded({ extended: true }));
 
 //Static Middleware
 app.use(express.static('public'));
+app.use(apiRoutes);
+app.use(routes);
 
 
-//Get Request for user input
-app.get("/api/notes", (req, res) => {
-    readFileAsync("./db.json", "utf8").then(function(data) {
-        notes = [].concat(JSON.parse(data))
-        res.json(notes);
-    })
-});
+// // GET /notes for notes.html file
+// app.get('/notes', (req, res) =>
+//   res.sendFile(path.join(__dirname, '/public/notes.html'))
+//   );
 
-//Post Request for user input
-app.post("/api/notes", (req, res) => {
-    const note = req.body;
-    readFileAsync("./db.json", "utf8").then(function(data) {
-        const notes = [].concat(JSON.parse(data));
-        note.id = uuid.v1();
-        notes.push(note);
-        return notes;
-    }).then(function(notes) {
-        writeFileAsync("./db.json", JSON.stringify(notes))
-        res.json(note);
-    })  
-});
-
-app.delete('/api/notes/:title', (req, res) => {
-    
-});
-
-// GET /notes for notes.html file
-app.get('/notes', (req, res) =>
-  res.sendFile(path.join(__dirname, '/public/notes.html'))
-);
-
-// GET * for index.html file, Home page
-app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, '/public/index.html'))
-);
+// // GET * for index.html file, Home page
+// app.get('*', (req, res) =>
+//   res.sendFile(path.join(__dirname, '/public/index.html'))
+// );
 
 app.listen(PORT, () =>
 console.log(`App listening at http://localhost:${PORT} 🚀`)
 );
 
+// //Get Request for user input
+// app.get("/api/notes", (req, res) => {
+//     readFileAsync("./db.json", "utf8").then(function(data) {
+//         notes = [].concat(JSON.parse(data))
+//         res.json(notes);
+//     })
+// });
 
+// //Post Request for user input
+// app.post("/api/notes", (req, res) => {
+//     const note = req.body;
+//     readFileAsync("./db.json", "utf8").then(function(data) {
+//         const notes = [].concat(JSON.parse(data));
+//         note.id = uuid.v1();
+//         notes.push(note);
+//         return notes;
+//     }).then(function(notes) {
+//         writeFileAsync("./db.json", JSON.stringify(notes))
+//         res.json(note);
+//     })  
+// });
 
+// //Get a note with specific id
+// app.get("/api/notes/:title", (req, res) => {
+//     res.json(notes[req.params.title]);
+// })
 
-
-
-
+// //Delete a note with specific id
+// app.delete('/api/notes/:title', (req, res) => {
+//     notes.splice(req.params.id);
+//     console.log("Deleted note with id "+req.params.title);
+// });
 
 
 
