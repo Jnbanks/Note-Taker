@@ -53,7 +53,7 @@ router.delete("/api/notes/:id", function(req, res) {
                 console.log(err)
                 throw err
             }
-            res.status(201).json(newNote);
+            res.status(201).json(newArr);
         })
     })
 } )
