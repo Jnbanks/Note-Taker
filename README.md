@@ -1,4 +1,28 @@
 # Note-Taker
+
+TO SEE THE FUNCTIONALITY OF THIS APPLICATION...
+
+1. clone this repo to your VS Code with terminal
+2. Open this repo in VS Code
+3. Right click on the server.js file
+4. In the drop down, select: Open in Integrated Terminal
+5. In the now open terminal, type: npm i
+6. After the necessary packages have downloaded, in the terminal type: node server.js
+7. You should see: App listening at http://localhost:3001
+8. Copy and paste http://localhost:3001 into your web browser
+9. The homepage of Note Taker should display
+10. Click: Get Started
+11. You should now be on the Note Taker page. Notice that you can type note Titles and Content on the right.
+12. Try making a note and press the save button in the upper right (it looks like a floppy disk)
+13. Your new note should save and be added to the saved notes collomn on the left
+14. Make as many notes as you please, and notice that you can delete notes as well with the delete button on the right of every note in the left collumn.
+
+
+
+
+
+
+
 Note taker application which utilizes Express.js
 
 11 Express.js: Note Taker
